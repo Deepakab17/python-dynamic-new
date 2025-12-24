@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+<title>Registration</title>
+    
+{% endblock title %}
+
+{% block content %}
+    <form action="{% url 'registration' %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %} 
+        <!-- Name -->
+        <label>Name:</label><br>
+        <input type="text" name="name" placeholder="Enter your name"><br><br>
+
+        <!-- Email -->
+        <label>Email:</label><br>
+        <input type="email" name="email" placeholder="Enter your email"><br><br>
+
+        <!-- Contact -->
+        <label>Contact:</label><br>
+        <input type="tel" name="contact" placeholder="Enter contact number"><br><br>
+
+        <!-- Image -->
+        <label>Upload Image:</label><br>
+        <input type="file" name="image" accept="image/*"><br><br>
+
+        <!-- Audio -->
+        <label>Upload Audio:</label><br>
+        <input type="file" name="audio" accept="audio/*"><br><br>
+
+        <!-- Video -->
+        <label>Upload Video:</label><br>
+        <input type="file" name="video" accept="video/*"><br><br>
+
+        <!-- Resume -->
+        <label>Upload Resume:</label><br>
+        <input type="file" name="resume"><br><br>
+
+        <!-- Qualification (Checkbox) -->
+        <label>Qualification:</label><br>
+        <input type="checkbox" name="qualification" value="10th"> 10th<br>
+        <input type="checkbox" name="qualification" value="12th"> 12th<br>
+        <input type="checkbox" name="qualification" value="Graduate"> Graduate<br>
+        <input type="checkbox" name="qualification" value="Post Graduate"> Post Graduate<br><br>
+
+        <!-- Gender (Radio) -->
+        <label>Gender:</label><br>
+        <input type="radio" name="gender" value="Male"> Male<br>
+        <input type="radio" name="gender" value="Female"> Female<br>
+        <input type="radio" name="gender" value="Other"> Other<br><br>
+
+        <!-- State (Dropdown) -->
+        <label>State:</label><br>
+        <select name="state">
+            <option value="">Select State</option>
+            <option value="Maharashtra">Maharashtra</option>
+            <option value="Gujarat">Gujarat</option>
+            <option value="Rajasthan">Rajasthan</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Karnataka">Karnataka</option>
+        </select><br><br>
+
+        <!-- Register Button -->
+        <button type="submit">Register</button>
+
+    </form>
+{% endblock content %}
+    
+    
