@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Employee
+from django.http import HttpResponse
 
 def landing(req):
     return render(req, 'landing.html')
@@ -16,8 +17,8 @@ def registration(req):
         a = req.FILES.get('audio')
         v = req.FILES.get('video')
         d = req.FILES.get('resume')
-        q =req.POST.getlist('qualification[]')
-
+        ql=req.POST.getlist('qualification[]')
+        q=','.join(ql)
         g = req.POST.get('gender')
         s = req.POST.get('state')
 
@@ -34,6 +35,6 @@ def registration(req):
             document=d
             )
 
-        return redirect('landing')
+        return HttpResponse('successfull')
 
     return render(req, 'registration.html')
