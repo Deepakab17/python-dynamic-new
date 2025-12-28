@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Employee
 from django.http import HttpResponse
+from .models import Employee as emp
 
 def landing(req):
     return render(req, 'landing.html')
@@ -38,3 +39,17 @@ def registration(req):
         return HttpResponse('successfull')
 
     return render(req, 'registration.html')
+def data(req):
+    # query that works on single-object
+    # data =emp.objects.get(id=1)
+    # data =emp.objects.latest('name')
+    # data =emp.objects.first()
+    # data =emp.objects.earliest('name')
+    # data =emp.objects.last()
+    # query that works on multiple-objects
+    
+
+
+    print(data.name,data.email,data.contact)
+    return render(req,'data.html', {'msg': data})
+
