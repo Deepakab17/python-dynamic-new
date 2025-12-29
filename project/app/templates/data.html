@@ -1,4 +1,34 @@
-{{msg}}
-<h1>Name :{{msg.name}}</h1>
-<h1>Email : {{msg.email}}</h1>
-<h1>State :{{msg.state}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Data</title>
+</head>
+<body>
+
+<table border="1" cellpadding="10">
+    
+    
+    <tr>
+        <th>Sl.No</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>State</th>
+        <th>Gender</th>
+    </tr>
+
+    {% for name,email,state,gender in msg %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{ name }}</td>
+        <td>{{ email }}</td>
+        <td>{{ state }}</td>
+        <td>{{gender}}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>
