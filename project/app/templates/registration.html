@@ -7,6 +7,12 @@
 {% endblock title %}
 
 {% block content %}
+
+{% if msg %}
+    <h1 style="color:aqua">{{msg}}</h1>
+{% endif %}
+    
+
     <form action="{% url 'registration' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %} 
         <!-- Name -->
@@ -65,6 +71,7 @@
             <option value="Delhi">Delhi</option>
             <option value="Karnataka">Karnataka</option>
             <option value="West Bengal">West Bengal</option>
+            <option value="West Bengal">Bihar</option>
         </select><br><br>
 
         <!-- Register Button -->

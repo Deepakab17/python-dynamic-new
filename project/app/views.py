@@ -7,6 +7,10 @@ def landing(req):
     return render(req, 'landing.html')
 
 def registration(req):
+    print("METHOD:", req.method)
+    print("POST DATA:", req.POST)
+    print("FILES:", req.FILES)
+
 
     if req.method == 'POST':
 
@@ -28,10 +32,10 @@ def registration(req):
         user=emp.objects.filter(email=e)
         if user:
             req.session['msg']=f'{e} Email already exists'
-            redirect ('registration')
+            return redirect ('registration')
         else:
             if p==cp :
-                Employee.objects.create(
+                emp.objects.create(
              name=n,
              email=e,
              password=p,
@@ -44,7 +48,30 @@ def registration(req):
             video=v,
             document=d
              )
-            else:
+                req.session['msg1']="Registration Successfull"
+                return redirect('login')
+    else:
+        req.session['msg']='Password did not match'
+        # redirect('registration')
+        msg = req.session.pop('msg', None)
+        return render(req, 'registration.html', {'msg': msg})
+def login(req):
+    if req.method=='POST':
+        e=req.POST.get('email')
+        p=req.POST.get('password')
+        user=emp.objects.filter(email=e)
+        if not user:
+            req.session['sign_up']=f'{e} not registered'
+            return redirect('registration')
+        else:
+            user_data=emp.objects.get(email=e)
+            db_password=user_data.password
+            if p==db_password:
+                req.session['user_id']=user_data.id
+                return redirect('dashboard')
+
+    msg=req.session.pop('msg1',None)
+    return render(req,'login.html',{'msg1': msg})
                 
         
                 
@@ -70,36 +97,36 @@ def registration(req):
 #         return HttpResponse('successfull')
 
 #     return render(req, 'registration.html')
-# def data(req):
-#     # query that works on single-object
-#     # data =emp.objects.get(id=1)
-#     # data =emp.objects.latest('name')
-#     # data =emp.objects.first()
-#     # data =emp.objects.earliest('name')
-#     # data =emp.objects.last()
-#     # query that works on multiple-objects
-#     # data = Employee.objects.all()
-#     # data = Employee.objects.filter(gender='Female')
-#     # data = Employee.objects.exclude(gender='Female')
-#     # data = Employee.objects.order_by('name')
-#     # data = Employee.objects.order_by('name')
-#     # data = Employee.objects.order_by('-name')
-# #     data = (
-# #     Employee.objects
-# #     .filter(state__in=['Delhi','Maharashtra','Karnataka'])
-# #     .exclude(gender="Female")
-# #     .order_by("id")
-# #     .reverse()
-# # )   
-#     # data=Employee.objects.values()
-#     data = Employee.objects.values_list('name','email','state','gender')
+def data(req):
+    # query that works on single-object
+    # data =emp.objects.get(id=1)
+    # data =emp.objects.latest('name')
+    # data =emp.objects.first()
+    # data =emp.objects.earliest('name')
+    # data =emp.objects.last()
+    # query that works on multiple-objects
+    # data = Employee.objects.all()
+    # data = Employee.objects.filter(gender='Female')
+    # data = Employee.objects.exclude(gender='Female')
+    # data = Employee.objects.order_by('name')
+    # data = Employee.objects.order_by('name')
+    # data = Employee.objects.order_by('-name')
+#     data = (
+#     Employee.objects
+#     .filter(state__in=['Delhi','Maharashtra','Karnataka'])
+#     .exclude(gender="Female")
+#     .order_by("id")
+#     .reverse()
+# )   
+    # data=Employee.objects.values()
+    data = Employee.objects.values_list('name','email','state','gender')
 
 
 
     
-#     print(data, end='/n')
+    print(data, end='/n')
     
-#     return render(req,'data.html',{'msg':data})
+    return render(req,'data.html',{'msg':data})
 
     
 
