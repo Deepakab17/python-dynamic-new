@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="sidebar">
+        <h2>User Panel</h2>
+
+        <a href="#">👤 My Profile</a>
+        <a href="#">🗂 My Documents</a>
+        <a href="#">🎧 My Media</a>
+        <a href="#">📄 My Details</a>
+
+        <div class="logout-box">
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <div class="main">
+        <h1>Welcome {{ data.name }}</h1>
+
+        <div class="card">
+            <p><strong>Email:</strong> {{ data.email }}</p>
+            <p><strong>Contact:</strong> {{ data.contact }}</p>
+            <p><strong>State:</strong> {{ data.state }}</p>
+            <p><strong>Gender:</strong> {{ data.gender }}</p>
+            <p><strong>Qualification:</strong> {{ data.q }}</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

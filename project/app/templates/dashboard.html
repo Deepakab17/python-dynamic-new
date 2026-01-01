@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    
+
+    
+<button type="submit"><a href="{% url 'logout' %}">LOG OUT</a></button>
+{% if data %}
+<h1 style="color: aqua;" >Welcome Captain ,{{data}}</h1>
+
+    
+{% endif %}
+    {% endblock content %}
