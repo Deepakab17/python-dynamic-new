@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Employee
 from django.http import HttpResponse
-from .models import Employee as emp
+from .models import Employee as emp,Employee1 as emp1, Department as dept
 
 def landing(req):
     return render(req, 'landing.html')
@@ -97,6 +97,79 @@ def dashboard(req):
         return render(req, 'userdashboard.html', {'data': user_data})
     else:
         return redirect('login')
+from .models import Employee1 as emp
+
+def add_emp(req):
+
+    if 'admin' in req.session:
+        print('admin is here')
+
+        data = req.session.get('admin')
+
+        if req.method == 'POST':
+
+            n = req.POST.get('name')
+            e = req.POST.get('email')
+            c = req.POST.get('contact')
+            p = req.POST.get('password')
+            cp = req.POST.get('cpassword')
+            img = req.FILES.get('profile')
+
+            print(n, e, c, p)
+
+            user = emp1.objects.filter(email=e)
+
+            if user:
+                req.session['msg'] = f'{e} Email already exists'
+                return redirect('add_emp')
+            else:
+                if p == cp:
+                    emp1.objects.create(
+                        name=n,
+                        email=e,
+                        contact=c,
+                        password=p,
+                        profile=img
+                    )
+                    req.session['message'] = 'employee added successfully'
+                    return redirect('add_emp')
+                else:
+                    req.session['msg'] = 'Password did not match'
+                    return redirect('add_emp')
+
+        msg = req.session.pop('msg', None)
+        message = req.session.pop('message', None)
+
+        return render(req, 'admindashboard.html', {
+            'data': data,
+            'add_emp': True,
+            'msg': msg,
+            'message': message
+        })
+
+
+def add_dept(req):
+    if 'admin' in req.session:
+        print("Dept")
+        data = req.session.get('admin')
+        return render(req,'admindashboard.html',{'data':data,'add_dept':True})
+def show_emp(req):
+    if 'admin' not in req.session:
+        return redirect('login')
+    data=req.session.get('admin')
+    departments=dept.objects.all()
+    return render(req,'admindashboard.html',{'data':data,
+                                             'departments':departments,
+                                             'show_dept':True})
+def show_dept(req):
+    if 'admin' not in req.session:
+        return redirect('login')
+    data=req.session.get('admin')
+    employees=emp1.objects.all()
+    return render(req,'admindashboard.html',{'data':data,
+                                             'employees':employees,
+                                             'show_emp':True})
+
 def logout(req):
     if req.session.get('user_id',None):
         req.session.flush()

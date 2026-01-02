@@ -18,5 +18,24 @@ class Employee(models.Model):
     document=models.FileField(upload_to="documents/")
     def __str__(self):
         return str(self.name)
+    
+class Employee1(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    contact = models.CharField(max_length=15)
+    profile = models.ImageField(upload_to='employee_profiles/', blank=True, null=True)
+    password = models.CharField(max_length=100)
+
+    def _str_(self):
+        return self.name
+    
+
+class Department(models.Model):
+    description = models.TextField(blank=True)
+
+    
+
+    def _str_(self):
+        return f"{self.name} ({self.code})"
 
 
