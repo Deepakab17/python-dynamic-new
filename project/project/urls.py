@@ -20,6 +20,7 @@ from app import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.landing,name='landing'),
@@ -31,6 +32,7 @@ urlpatterns = [
     path('dashboard/add_dept/',views.add_dept,name='add_dept'),
     path('dashboard/show_dept/',views.show_dept,name='show_dept'),
     path('dashboard/show_emp/',views.show_emp,name='show_emp'),
+    path('delete/',views.delete,name='delete'),
     path('logout/',views.logout,name='logout'),
 
     # path('register_data',views.register_data,name='register_data')

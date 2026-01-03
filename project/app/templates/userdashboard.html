@@ -1,11 +1,6 @@
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>User Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
-</head>
-<body>
+
 
 <div class="container">
 
@@ -28,13 +23,9 @@
         <div class="card">
             <p><strong>Email:</strong> {{ data.email }}</p>
             <p><strong>Contact:</strong> {{ data.contact }}</p>
-            <p><strong>State:</strong> {{ data.state }}</p>
-            <p><strong>Gender:</strong> {{ data.gender }}</p>
-            <p><strong>Qualification:</strong> {{ data.q }}</p>
+            
         </div>
     </div>
 
 </div>
 
-</body>
-</html>
