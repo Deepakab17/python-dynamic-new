@@ -1,20 +1,25 @@
+/* ===== GLOBAL ===== */
+
 body {
     margin: 0;
     background: rgb(15, 23, 42);
     font-family: Arial, sans-serif;
 }
 
+/* ===== LAYOUT ===== */
+
 .container {
     display: flex;
     height: 100vh;
 }
 
-/* Sidebar */
+/* ===== SIDEBAR ===== */
+
 .sidebar {
     width: 260px;
     background: rgb(2, 6, 23);
     padding: 25px;
-    box-shadow: 4px 0px 10px rgb(0, 0, 0);
+    box-shadow: 4px 0 10px rgb(0, 0, 0);
 }
 
 .sidebar h2 {
@@ -26,7 +31,7 @@ body {
 .sidebar a {
     display: block;
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: white;
     background: rgb(30, 41, 59);
     padding: 12px;
     margin: 10px 0;
@@ -38,6 +43,8 @@ body {
     background: rgb(56, 189, 248);
     color: rgb(0, 0, 0);
 }
+
+/* ===== LOGOUT ===== */
 
 .logout-box {
     position: absolute;
@@ -52,19 +59,26 @@ body {
     padding: 12px;
     border-radius: 8px;
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: white;
 }
 
 .logout-btn:hover {
     background: rgb(185, 28, 28);
 }
 
-/* Main */
+/* ===== MAIN ===== */
+
 .main {
     flex: 1;
     padding: 40px;
-    color: rgb(255, 255, 255);
+    color: white;
 }
+
+.main h1 {
+    margin-bottom: 20px;
+}
+
+/* ===== DASHBOARD CARD ===== */
 
 .card {
     margin-top: 25px;
@@ -72,4 +86,47 @@ body {
     padding: 20px;
     border-radius: 12px;
     width: 400px;
+}
+
+/* ===== PROFILE CARD ===== */
+
+.profile-card {
+    width: 520px;
+    background: rgb(2, 6, 23);
+    padding: 26px;
+    border-radius: 12px;
+    border: 1px solid rgb(56, 189, 248);
+    box-shadow: 0 12px 30px rgb(0, 0, 0);
+    color: white;
+}
+
+.profile-card .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgb(56, 189, 248);
+}
+
+.profile-card .row:last-child {
+    border-bottom: none;
+}
+
+.profile-img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgb(56, 189, 248);
+}
+body {
+    border: 5px solid red;
+}
+
+.profile-card {
+    all: initial;
+    display: block;
+    width: 520px;
+    background: lime;
+    padding: 30px;
+    border: 5px solid red;
 }

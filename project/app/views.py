@@ -156,16 +156,7 @@ def add_emp(req):
             'data': data,
             'add_emp': True,
             'msg': msg,
-            'message': message
-        
-        })
-        
-        
-        
-        
-        
-
-
+            'message': message})  
 def add_dept(req):
     if 'admin' in req.session:
         print("Dept")
@@ -181,42 +172,58 @@ def add_dept(req):
                 dept.objects.create(
                     name=n,
                     code=c,
-                    description=d
-                )
+                    description=d)
                 req.session['message']='Department created successfully'
                 return redirect('add_dept')
         msg = req.session.pop('msg', None)
-        message = req.session.pop('message', None)
-            
-        return render(req,'admindashboard.html',{'add_dept':True,
-                                                 'msg':msg,
-                                                 'message':message})
+        message = req.session.pop('message', None)   
+        return render(req,'admindashboard.html',{'add_dept':True,'msg':msg,'message':message})                                           
 def show_emp(req):
     if 'admin' not in req.session:
         return redirect('login')
     data=req.session.get('admin')
     employees=emp1.objects.all()
-    return render(req,'admindashboard.html',{'data':data,
-                                             'employees':employees,
-                                             'show_emp':True})
+    return render(req,'admindashboard.html',{'data':data,'employees':employees,'show_emp':True})                                    
 def show_dept(req):
     if 'admin' not in req.session:
         return redirect('login')
     # data=req.session.get('admin')
     departments=dept.objects.all()
-    return render(req,'admindashboard.html',{
-                                             'departments':departments,
-                                             'show_dept':True})
-
-
-
-def delete(req):
+    return render(req,'admindashboard.html',{'departments':departments,'show_dept':True})
+def delete(req,id):
     if 'admin' not in req.session:
         return redirect('login')
-
-    emp1.objects.filter(id=id).delete()
-    return redirect('show_emp')
-
+    else:
+        data = emp1.objects.get(id=id)
+        data.delete()
+        return redirect('show_emp')
+def delete_query(req,pk):
+    data = Query.objects.get(id=pk)
+    data.delete()
+    all_query = Query.objects.all()
+    return render(req,'admindashboard.html',{'query':all_query})
+def show_query(req):
+    all_query = Query.objects.all()
+    return render(req,'admindashboard.html',{'query':all_query})
+def query(req):
+    return render(req,'userdashboard.html',{'query':True})
+def profile(req):
+    user_id = req.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+    user = emp1.objects.get(id=user_id)
+    return render(req, 'userdashboard.html', {'user': user})
+def submit_query(req):
+    if req.method == "POST":
+        name = req.POST.get('name')
+        email = req.POST.get('email')
+        user_query = req.POST.get('query')
+        Query.objects.create(
+            name=name,
+            email=email,
+            query=user_query
+        )
+    return redirect('dashboard')
 def logout(req):
     if req.session.get('user_id',None):
         req.session.flush()

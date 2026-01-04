@@ -32,7 +32,12 @@ urlpatterns = [
     path('dashboard/add_dept/',views.add_dept,name='add_dept'),
     path('dashboard/show_dept/',views.show_dept,name='show_dept'),
     path('dashboard/show_emp/',views.show_emp,name='show_emp'),
-    path('delete/',views.delete,name='delete'),
+    path('profile/',views.profile,name='profile'),
+    path('query/delete_query/<int:pk>/',views.delete_query,name='delete_query'),
+    path('users/query/',views.query,name='query'),
+    path('submit_query/',views.submit_query,name='submit_query'),
+    path('show_query/',views.show_query,name='show_query'),
+    path('delete/<int:id>',views.delete,name='delete'),
     path('logout/',views.logout,name='logout'),
 
     # path('register_data',views.register_data,name='register_data')

@@ -1,0 +1,76 @@
+/* This wrapper already exists in your HTML:
+   <div class="container"> inside {% if query %} */
+
+.query-section {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgb(2, 6, 23);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+/* Title */
+.query-section h2 {
+    color: rgb(56, 189, 248);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Table */
+.query-section table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgb(15, 23, 42);
+}
+
+/* Header */
+.query-section thead {
+    background: rgb(30, 41, 59);
+}
+
+.query-section th {
+    color: rgb(147, 197, 253);
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid rgb(51, 65, 85);
+}
+
+/* Rows */
+.query-section td {
+    color: rgb(226, 232, 240);
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgb(51, 65, 85);
+}
+
+/* Hover */
+.query-section tbody tr:hover {
+    background: rgb(30, 41, 59);
+}
+
+/* Buttons */
+.query-section .btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.query-section .btn-primary {
+    background: rgb(56, 189, 248);
+    color: black;
+}
+
+.query-section .btn-danger {
+    background: rgb(239, 68, 68);
+    color: white;
+}
+
+.query-section .btn-primary:hover {
+    background: rgb(125, 211, 252);
+}
+
+.query-section .btn-danger:hover {
+    background: rgb(220, 38, 38);
+}

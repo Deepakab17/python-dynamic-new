@@ -94,9 +94,6 @@ body {
     border-radius: 12px;
     box-shadow: 0 18px 40px rgba(0,0,0,0.55);
 }
-
-
-
 label {
     display: block;
     margin-top: 12px;
@@ -165,4 +162,29 @@ tbody tr:hover {
     background: rgb(30, 41, 59);
 }
 
+.showemp-center-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
 
+.showemp-center-wrapper .card {
+    width: 100%;
+    max-width: 1100px;
+}
+
+.showemp-center-wrapper .table-responsive {
+    overflow-x: auto;
+}
+
+.showemp-center-wrapper table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.showemp-center-wrapper th,
+.showemp-center-wrapper td {
+    word-wrap: break-word;
+    white-space: normal;
+    text-align: center;
+}

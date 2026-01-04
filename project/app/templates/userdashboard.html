@@ -1,31 +1,84 @@
 {% load static %}
-    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/user_query.css' %}">
 
 <div class="container">
 
     <div class="sidebar">
         <h2>User Panel</h2>
 
-        <a href="#">👤 My Profile</a>
-        <a href="#">🗂 My Documents</a>
-        <a href="#">🎧 My Media</a>
-        <a href="#">📄 My Details</a>
+        <a href="{% url 'profile' %}">My Profile</a>
+        <a href="{% url 'query' %}">Queries</a>
+        <a href="#">Query Status</a>
+        <a href="#">My Queries</a>
 
         <div class="logout-box">
             <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
         </div>
     </div>
 
+    <!-- ===== MAIN CONTENT AREA ===== -->
     <div class="main">
-        <h1>Welcome {{ data.name }}</h1>
 
-        <div class="card">
-            <p><strong>Email:</strong> {{ data.email }}</p>
-            <p><strong>Contact:</strong> {{ data.contact }}</p>
-            
+        {% if data %}
+
+            <h1 style="color: aqua; margin: 50px;">Welcome {{ data.name }}</h1>
+
+            <div class="card" style="width: fit-content; height: fit-content; background-color: aqua; color:red; margin-top: 100px; margin-left: -350px;">
+                <p><strong>Name:</strong> {{ data.name }}</p>
+                <p><strong>Email:</strong> {{ data.email }}</p>
+                <p><strong>Contact:</strong> {{ data.contact }}</p>
+            </div>
+
+        {% elif user %}
+
+            <h1 style="color: aqua; margin: 50px;">Department: {{ user.departments }}</h1>
+
+            <div class="card" style="width: fit-content; height: fit-content; background-color:black; color: aqua; margin-left: 50px; margin-top: 200px;">
+                <p><strong>Name:</strong> {{ user.name }}</p>
+                <button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+
+                <p><strong>Phone:</strong> {{ user.contact }}</p>
+                <button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+
+                <p><strong>Profile Picture:</strong> {{ user.profile|default:'No Picture Available' }}</p>
+                <button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+
+                <p><strong>Password:</strong> {{ user.password }}</p>
+                <button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+            </div>
+
+        {% elif query %}
+
+         <div class="user-query-section">
+    <h2>Submit Your Query</h2>
+
+    <form method="post" action="{% url 'submit_query' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" required>
         </div>
-    </div>
 
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Your Query</label>
+            <textarea name="query" rows="5" required></textarea>
+        </div>
+
+        <button type="submit">Send Query</button>
+    </form>
 </div>
 
+        {% endif %}
+
+    </div>
+</div>

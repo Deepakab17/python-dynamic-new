@@ -1,0 +1,84 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        to right,
+        midnightblue,
+        royalblue,
+        dodgerblue
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    background: linear-gradient(
+        to bottom right,
+        rgb(2, 6, 23),
+        rgb(15, 23, 42)
+    );
+    color: white;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+}
+
+h3 {
+    color: white;
+    font-weight: bold;
+}
+
+.form-label {
+    color: lightgray;
+}
+
+.form-control {
+    background: transparent;
+    border: 1px solid lightgray;
+    color: white;
+}
+
+.form-control::placeholder {
+    color: lightgray;
+}
+
+.form-control:focus {
+    background: transparent;
+    border-color: white;
+    color: white;
+    box-shadow: none;
+}
+
+.btn-primary {
+    background: linear-gradient(
+        to right,
+        orange,
+        gold
+    );
+    border: none;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(
+        to right,
+        gold,
+        orange
+    );
+}
+.alert-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(to right, darkred, crimson);
+    color: white;
+    text-align: center;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.alert-box h5 {
+    margin: 0;
+}

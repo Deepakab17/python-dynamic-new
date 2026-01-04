@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,19 +7,22 @@
 
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 <body class="bg-light">
-    <div style="background:black; padding:15px;">
-
-    {% if sign_up %}
-        <h3 style="color:red;">{{ sign_up }}</h3>
+    
+  {% if sign_up %}
+<div class="alert-box">
+        <h5>{{ sign_up }}</h5>
     {% endif %}
 
     {% if msg1 %}
-        <h3 style="color:orange;">{{ msg1 }}</h3>
+        <h5>{{ msg1 }}</h5>
     {% endif %}
-
 </div>
+
+
+
 
 <div class="container">
     <div class="row justify-content-center mt-5">
