@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Employee
 from django.http import HttpResponse
 from django.core.mail import send_mail
+from django.contrib import messages
 from .models import Employee as emp,Employee1 as emp1, Department as dept,Query 
 
 
@@ -152,11 +153,13 @@ def add_emp(req):
         
         msg = req.session.pop('msg', None)
         message = req.session.pop('message', None)
+        all_dept=dept.objects.all()
         return render(req, 'admindashboard.html', {
             'data': data,
             'add_emp': True,
             'msg': msg,
-            'message': message})  
+            'message': message,
+            'all_dept':all_dept})  
 def add_dept(req):
     if 'admin' in req.session:
         print("Dept")
@@ -206,14 +209,6 @@ def show_query(req):
     all_query = Query.objects.all()
     return render(req,'admindashboard.html',{'query':all_query})
 def query(req):
-    return render(req,'userdashboard.html',{'query':True})
-def profile(req):
-    user_id = req.session.get('user_id')
-    if not user_id:
-        return redirect('login')
-    user = emp1.objects.get(id=user_id)
-    return render(req, 'userdashboard.html', {'user': user})
-def submit_query(req):
     if req.method == "POST":
         name = req.POST.get('name')
         email = req.POST.get('email')
@@ -223,7 +218,17 @@ def submit_query(req):
             email=email,
             query=user_query
         )
-    return redirect('dashboard')
+        messages.success(req,'Query submitted! ')
+        return redirect('query')
+    return HttpResponse('query is running')
+ 
+def profile(req):
+    user_id = req.session.get('user_id')
+    if not user_id:
+        return redirect('login')
+    user = emp1.objects.get(id=user_id)
+    return render(req, 'userdashboard.html', {'user': user})
+
 def logout(req):
     if req.session.get('user_id',None):
         req.session.flush()

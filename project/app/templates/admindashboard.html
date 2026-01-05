@@ -41,9 +41,20 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Employee Department:</label>
-            <input type="text" name="department" class="form-control">
-          </div>
+    <label class="form-label">Employee Department</label>
+
+    <div class="input-group">
+        <select name="department" class="form-control">
+            <option value="">Select Department</option>
+
+            {% for i in all_dept %}
+                <option value="{{ i.name }}">{{ i.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+`
+
 
           <div class="mb-3">
             <label class="form-label">Employee Email:</label>
@@ -116,7 +127,7 @@
             <table class="table table-bordered table-hover">
               <thead class="table-dark">
                 <tr>
-                  <th>#</th>
+                  <th>Sl. No</th>
                   <th>Name</th>
                   <th>Code</th>
                   <th>Description</th>
