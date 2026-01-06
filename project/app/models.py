@@ -36,7 +36,7 @@ class Department(models.Model):
         return f"{self.name} ({self.code})"
 class Query(models.Model):
     name=models.CharField(max_length=20)
-    email=models.EmailField(unique=True)
+    email=models.EmailField()
     query=models.CharField(max_length=100,blank=False)
 
 class userquery(models.Model):

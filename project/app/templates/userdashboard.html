@@ -1,54 +1,73 @@
 {% load static %}
-    <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
-    <link rel="stylesheet" href="{% static 'css/user_query.css' %}">
-
+<link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
 
 <div class="container">
 
-    <div class="sidebar">
-        <h2>User Panel</h2>
+<div class="sidebar">
 
-        <a href="{% url 'profile' %}">My Profile</a>
-        <a href="{% url 'query' %}">Queries</a>
-        <a href="#">Query Status</a>
-        <a href="#">My Queries</a>
+    <div class="profile">
+        {% if user.profile %}
+            <img src="{{ user.profile.url }}" alt="Profile">
+            
+       {% endif %} 
+    </div><br><br>
+  
+    <h2>{{ user.name }}</h2>
+   
 
-        <div class="logout-box">
-            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
-        </div>
+    <a href="{% url 'profile' %}">My Profile</a>
+    <a href="{% url 'query' %}">Queries</a>
+    <a href="{% url 'query_status' %}">Query Status</a>
+    <a href="#">My Queries</a>
+
+    <div class="logout-box">
+        <a href="{% url 'logout' %}" class="logout-btn" onclick="return confirm('Log Out?')">Logout</a>
     </div>
 
-{% if data %}
-
-    
-    <h1 style="color: aqua; margin: 50px;" >Welcome {{ data.name }}</h1>
-    <div class="card" style="width: 300px; height:300px; background-color:transparent; color:red;margin-top: 100px; margin-left: -350px;overflow: hidden;">
-        <div class="profile">
-        <img src="{{user.profile.url}}" alt="Your Profile Here">
-        </div>
-
-        <p><strong>Name:</strong> {{ data.name }}</p>
-        <p><strong>Email:</strong> {{ data.email }}</p>
-        <p><strong>Contact:</strong> {{ data.contact }}</p>
-    </div>
 </div>
 
-{% elif profile %}
-<h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">Department: {{user.department}}</h1>
+<div class="main">
+    {% if messages %}
+<div class="message-box">
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-<div class="card" style="width: fit-content;height: fit-content; background-color:black; color: aqua; margin-left: 50px;margin-top: 200px;">
-        <p><strong>Name:</strong> {{ user.name }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
-        <p><strong>Email:</strong> {{ user.email }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
-        <p><strong>Phone:</strong> {{ user.contact }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
-        
-        {% if profile.image %}    
-        Profile Picture:<img src="{{ profile.image.url }}" alt="image here">
-        
-        {% else %}
-        Profile Picture :N/A
-        {% endif %}
-        <p><strong>Password:</strong> {{ user.password }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+
+{% if profile %}
+    <h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">
+        Department: {{ user.department }}
+    </h1>
+
+    <div class="profile-card">
+
+        <div class="profile-row">
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <button class="edit-btn">Edit</button>
+        </div>
+
+        <div class="profile-row">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <button class="edit-btn">Edit</button>
+        </div>
+
+        <div class="profile-row">
+            <p><strong>Phone:</strong> {{ user.contact }}</p>
+            <button class="edit-btn">Edit</button>
+        </div>
+
+        <div class="profile-row">
+            <p><strong>Password:</strong> {{ user.password }}</p>
+            <button class="edit-btn">Edit</button>
+        </div>
+
     </div>
+
+
 {% elif query %}
 <div class="query-card" >
     <form action="{% url 'query' %}" method="post">
@@ -57,11 +76,11 @@
         <h3 class="query-title">Submit Your Query</h3>
 
         <div class="query-field">
-            <input type="text" name="name" placeholder="Your Name">
+            <input type="text" name="name" value="{{user.name}}" readonly>
         </div>
 
         <div class="query-field">
-            <input type="email" name="email" placeholder="Your Email">
+            <input type="email" name="email" value="{{user.email}}" readonly>
         </div>
 
         <div class="query-field">
@@ -71,7 +90,54 @@
         <button class="query-btn" type="submit">Submit</button>
     </form>
 </div>
+{% elif query_status %}
+    <div id="query_status" class="query-status-section">
+
+    <div class="query-status-card">
+
+        <h3 class="query-status-title">Query Status</h3>
+
+        <table class="query-status-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Query</th>
+                    <th>Status</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for q in queries %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ q.query }}</td>
+
+                    <td>
+                        {% if q.status == 'Done' %}
+                            <span class="status done">Done</span>
+                        {% else %}
+                            <span class="status pending">Pending</span>
+                        {% endif %}
+                    </td>
+
+                    <td>{{ q.solution|default:"Waiting for admin response" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="empty-msg">No queries submitted</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</div>
 {% endif %}
+
 
     
 

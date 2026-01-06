@@ -29,7 +29,7 @@ body {
 .sidebar a {
     display: block;
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: rgb(185, 145, 71);
     background: rgb(30, 41, 59);
     padding: 12px;
     margin: 10px 0;
@@ -68,7 +68,7 @@ body {
     background-position: center;
     flex: 1;
     padding: 40px;
-    color: rgb(255, 255, 255);
+    color:rgb(204, 160, 78);
     display: flex;
     flex-direction: column;
 }
@@ -91,7 +91,7 @@ body {
 .center-page .card {
     width: 100%;
     max-width: 900px;
-    background: rgb(2, 6, 23);
+    background: rgba(0, 0, 0, 0.712);
     padding: 26px;
     border-radius: 12px;
     box-shadow: 0 18px 40px rgba(0,0,0,0.55);
@@ -157,7 +157,7 @@ thead {
 th, td {
     padding: 10px;
     border: 1px solid rgb(51, 65, 85);
-    color: rgb(229, 231, 235);
+    color: rgb(114, 212, 212);
 }
 
 tbody tr:hover {
@@ -203,4 +203,52 @@ tbody tr:hover {
     height: 35px;
 }
 
+@keyframes spinBorder {
+    to { transform: rotate(360deg); }
+}
 
+.image {
+    position: relative;
+
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+    min-height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px dashed aqua;
+    box-sizing: border-box;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.55);
+    transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+.image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px dashed aqua;
+    animation: spinBorder 10s linear infinite;
+    pointer-events: none;
+}
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.image:hover img {
+    transform: scale(1.15);
+}
+
+.image:hover {
+    border-color: rgb(210, 173, 103);
+}
+
+.image:active {
+    transform: scale(0.95);
+}

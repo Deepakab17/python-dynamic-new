@@ -101,8 +101,8 @@ def dashboard(req):
         return render(req,'admindashboard.html',{'data':data})
     elif req.session.get('user_id',None):
         id = req.session['user_id']
-        user_data = emp1.objects.get(id=id)
-        return render(req, 'userdashboard.html', {'data': user_data,'active':'profile'})
+        user= emp1.objects.get(id=id)
+        return render(req, 'userdashboard.html', {'user':user})
     else:
         return redirect('login')
 def userdashboard(req):
@@ -236,9 +236,13 @@ def delete_query(req,pk):
     all_query = Query.objects.all()
     return render(req,'admindashboard.html',{'query':all_query})
 def show_query(req):
+    user_id = req.session.get('user_id')
+    user=user = emp1.objects.get(id=user_id)
     all_query = Query.objects.all()
-    return render(req,'admindashboard.html',{'query':all_query})
+    queries = Query.objects.filter(email=user.email)
+    return render(req,'admindashboard.html',{'query':all_query,'queries':queries})
 def query(req):
+    print("query form is open")
     if req.method == "POST":
         name = req.POST.get('name')
         email = req.POST.get('email')
@@ -248,18 +252,33 @@ def query(req):
             email=email,
             query=user_query
         )
-
         messages.success(req, 'Query submitted successfully!')
-        return redirect('user_dashboard')
+        return redirect('dashboard')
+    id=req.session['user_id']
+    user= emp1.objects.get(id=id)
+    return render(req, 'userdashboard.html',{'query':True,'user':user})
+def query_status(req):
+    user_id = req.session.get('user_id')
+    if not user_id:
+        return redirect('login')
 
-    return render(req, 'userdashboard.html',{'query':True})
+    user = emp1.objects.get(id=user_id)
 
- 
+    queries = Query.objects.filter(email=user.email)
+
+    return render(req, 'userdashboard.html', {
+        'user': user,
+        'query_status': True,
+        'queries': queries
+    })
+
 def profile(req):
+
     user_id = req.session.get('user_id')
     if not user_id:
         return redirect('login')
     user = emp1.objects.get(id=user_id)
+    print("PROFILE FIELD IN VIEW:", user.profile)
     return render(req, 'userdashboard.html', {'user': user,'profile':True})
 
 def logout(req):

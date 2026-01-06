@@ -5,7 +5,10 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <h2>Admin Panel</h2>
+    <div class="image">
+      <img src="{% static 'images/Profile.jpg' %}" alt="profile here">
+    </div>
+    <h1 style="color: aqua;">Hello Deepak </h1>
 
     <a href="{% url 'add_dept' %}">Add Department</a>
     <a href="{% url 'add_emp' %}">Add Employee</a>
@@ -14,7 +17,7 @@
     <a href="{% url 'show_query' %}">Employee Queries</a>
 
     <div class="logout-box">
-      <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+      <a href="{% url 'logout' %}" class="logout-btn" onclick="return confirm('Are You Sure?')">Logout</a>
     </div>
   </div>
 
@@ -178,7 +181,6 @@
                   <th>Contact</th>
                   <th>Department</th>
                   <th>D_code</th>
-                  <th>D_desc</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -192,7 +194,6 @@
                   <td>{{ emp.contact }}</td>
                   <td>{{ emp.department }}</td>
                   <td>{{ emp.d_code }}</td>
-                  <td>{{ emp.d_des }}</td>
                   <td>
                     <a href="{% url 'delete' emp.id %}" class="btn btn-danger btn-sm">Delete</a>
                   </td>
