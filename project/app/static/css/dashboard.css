@@ -64,6 +64,8 @@ body {
 
 
 .main {
+    background-image: url(../images/Sheild.jpg);
+    background-position: center;
     flex: 1;
     padding: 40px;
     color: rgb(255, 255, 255);
@@ -188,3 +190,17 @@ tbody tr:hover {
     white-space: normal;
     text-align: center;
 }
+.dept-select {
+    background-color: transparent;
+    border: 1px solid rgb(76, 181, 222);
+    color:White;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
+    border-radius: 5px;
+    width: 270px;
+    height: 35px;
+}
+
+

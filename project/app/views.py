@@ -3,7 +3,7 @@ from .models import Employee
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.contrib import messages
-from .models import Employee as emp,Employee1 as emp1, Department as dept,Query 
+from .models import Employee as emp,Employee1 as emp1, Department as dept,Query,userquery as uq
 
 
 def landing(req):
@@ -66,7 +66,7 @@ def login(req):
         p = req.POST.get('password')
         if e=='deepaknab17@gmail.com' and p=='deepakNAB@17':
             data={
-                'name':'Deepak',
+                'name':'Sony',
                 'email':'deepaknab17@gmail.com',
                 'contact':'9874561230',
                 'password':'deepakNAB@17'}
@@ -102,10 +102,32 @@ def dashboard(req):
     elif req.session.get('user_id',None):
         id = req.session['user_id']
         user_data = emp1.objects.get(id=id)
-        return render(req, 'userdashboard.html', {'data': user_data})
+        return render(req, 'userdashboard.html', {'data': user_data,'active':'profile'})
     else:
         return redirect('login')
+def userdashboard(req):
+    if 'user_id' not in req.session:
+        return redirect('login')
 
+    # section = req.GET.get('section', 'profile')  
+    # context = {'active': section}
+
+    # if req.method == "POST" and section == 'query':
+    #     name = req.POST.get('name')
+    #     email = req.POST.get('email')
+    #     query_text = req.POST.get('query')
+    #     uq.objects.create(name=name, email=email, query=query_text)
+    #     context['msg'] = "Query submitted successfully!"
+
+    # if section == 'query_s':
+    #     user_name = req.session.get('user_name')
+    #     user_email = req.session.get('user_email')
+    #     context['user_queries'] = uq.objects.filter(name=user_name, email=user_email)
+
+    # if section == 'query_a':
+    #     context['all_queries'] = uq.objects.all()
+
+    # return render(req, 'userdashboard.html', context)
 
 def add_emp(req):
 
@@ -122,8 +144,13 @@ def add_emp(req):
             p = req.POST.get('password')
             cp = req.POST.get('cpassword')
             img = req.FILES.get('profile')
+            dep = req.POST.get('department')
+            dep_data= dept.objects.get(id=dep)
+            d_name=dep_data.name
+            d_code=dep_data.code
+            d_des=dep_data.description
 
-            print(n, e, c, p)
+            print(n, e, c, p,dep,dep_data)
 
             user = emp1.objects.filter(email=e)
 
@@ -137,7 +164,10 @@ def add_emp(req):
                         email=e,
                         contact=c,
                         password=p,
-                        profile=img
+                        profile=img,
+                        department=d_name,
+                        d_code=d_code,
+                        d_des=d_des
                     )
                     send_mail("User id and Password from admin",
                               f'your user_id is {e} and password is {p}',
@@ -218,16 +248,19 @@ def query(req):
             email=email,
             query=user_query
         )
-        messages.success(req,'Query submitted! ')
-        return redirect('query')
-    return HttpResponse('query is running')
+
+        messages.success(req, 'Query submitted successfully!')
+        return redirect('user_dashboard')
+
+    return render(req, 'userdashboard.html',{'query':True})
+
  
 def profile(req):
     user_id = req.session.get('user_id')
     if not user_id:
         return redirect('login')
     user = emp1.objects.get(id=user_id)
-    return render(req, 'userdashboard.html', {'user': user})
+    return render(req, 'userdashboard.html', {'user': user,'profile':True})
 
 def logout(req):
     if req.session.get('user_id',None):

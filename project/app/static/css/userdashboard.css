@@ -1,132 +1,165 @@
-/* ===== GLOBAL ===== */
-
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
-    background: rgb(15, 23, 42);
+    padding: 0;
     font-family: Arial, sans-serif;
 }
 
-/* ===== LAYOUT ===== */
+body {
+    background: rgb(2, 6, 23);
+}
+
+/* ---------- LAYOUT ---------- */
 
 .container {
     display: flex;
     height: 100vh;
 }
 
-/* ===== SIDEBAR ===== */
+/* ---------- SIDEBAR ---------- */
 
 .sidebar {
     width: 260px;
     background: rgb(2, 6, 23);
     padding: 25px;
-    box-shadow: 4px 0 10px rgb(0, 0, 0);
+    border-right: 1px solid rgb(56, 189, 248);
 }
 
 .sidebar h2 {
     color: rgb(56, 189, 248);
-    text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .sidebar a {
     display: block;
+    color: rgb(224, 242, 254);
     text-decoration: none;
-    color: white;
-    background: rgb(30, 41, 59);
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
+    margin: 12px 0;
+    padding: 8px;
+    border-radius: 6px;
     transition: 0.3s;
 }
 
 .sidebar a:hover {
     background: rgb(56, 189, 248);
-    color: rgb(0, 0, 0);
+    color: rgb(2, 6, 23);
 }
 
-/* ===== LOGOUT ===== */
-
 .logout-box {
-    position: absolute;
-    bottom: 30px;
-    width: 210px;
+    margin-top: 40px;
 }
 
 .logout-btn {
     display: block;
     text-align: center;
-    background: rgb(220, 38, 38);
-    padding: 12px;
-    border-radius: 8px;
-    text-decoration: none;
+    padding: 10px;
+    background: rgb(239, 68, 68);
     color: white;
+    text-decoration: none;
+    border-radius: 6px;
 }
 
-.logout-btn:hover {
-    background: rgb(185, 28, 28);
-}
-
-/* ===== MAIN ===== */
+/* ---------- MAIN CONTENT ---------- */
 
 .main {
+    background-image: url(../images/Captain_Jack.jpg);
+    background-position: right;
+    background-size: cover;
     flex: 1;
     padding: 40px;
-    color: white;
+    position: relative;
 }
 
-.main h1 {
+/* ---------- PROFILE / USER INFO ---------- */
+
+h1 {
     margin-bottom: 20px;
 }
 
-/* ===== DASHBOARD CARD ===== */
-
 .card {
-    margin-top: 25px;
-    background: rgb(30, 41, 59);
     padding: 20px;
-    border-radius: 12px;
-    width: 400px;
-}
-
-/* ===== PROFILE CARD ===== */
-
-.profile-card {
-    width: 520px;
-    background: rgb(2, 6, 23);
-    padding: 26px;
-    border-radius: 12px;
+    border-radius: 10px;
+    background: rgba(2, 6, 23, 0.8);
     border: 1px solid rgb(56, 189, 248);
-    box-shadow: 0 12px 30px rgb(0, 0, 0);
-    color: white;
+    color: rgb(224, 242, 254);
 }
 
-.profile-card .row {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid rgb(56, 189, 248);
-}
+/* ---------- QUERY FORM ---------- */
 
-.profile-card .row:last-child {
-    border-bottom: none;
-}
-
-.profile-img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid rgb(56, 189, 248);
-}
-body {
-    border: 5px solid red;
-}
-
-.profile-card {
-    all: initial;
-    display: block;
-    width: 520px;
-    background: lime;
+.query-card {
+    width: 420px;
     padding: 30px;
-    border: 5px solid red;
+    background: rgba(2, 6, 23, 0.85);
+    border: 1px solid rgb(56, 189, 248);
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
+    color: rgb(224, 242, 254);
+
+    position: absolute;
+    top: 50%;
+    left: calc(50% + 130px);
+    transform: translate(-50%, -50%);
+}
+
+.query-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgb(56, 189, 248);
+}
+
+.query-field input,
+.query-field textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: rgba(2, 6, 23, 0.4);
+    border: 1px solid rgb(56, 189, 248);
+    border-radius: 6px;
+    color: rgb(224, 242, 254);
+}
+
+.query-field input::placeholder,
+.query-field textarea::placeholder {
+    color: rgb(148, 163, 184);
+}
+
+.query-field input:focus,
+.query-field textarea:focus {
+    outline: none;
+    border-color: rgb(14, 165, 233);
+    box-shadow: 0 0 6px rgba(14, 165, 233, 0.7);
+}
+
+.query-btn {
+    width: 100%;
+    padding: 10px;
+    background: rgb(56, 189, 248);
+    border: none;
+    border-radius: 6px;
+    color: rgb(2, 6, 23);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.query-btn:hover {
+    background: rgb(14, 165, 233);
+}
+
+.profile{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.profile img{
+    width: 100%;
+    height: 100%;
+    border: 2px dashed aqua;
+    object-fit:cover;
+    border-radius: 50%;
+    transition: transform .5s ease-in-out ;
+}
+.profile img:hover{
+    transform: scale(1.1);
+    border: 2px dotted orange;
 }

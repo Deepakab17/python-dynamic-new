@@ -2,6 +2,8 @@
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
 <div class="container">
+
+  <!-- Sidebar -->
   <div class="sidebar">
     <h2>Admin Panel</h2>
 
@@ -15,81 +17,83 @@
       <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
     </div>
   </div>
+
+  <!-- Main Area -->
   <div class="main">
 
     {% if data %}
-      <h1 style="color: aqua; margin-left: 20px;">Welcome {{ data.name }}</h1>
+      <h1 class="welcome-text">Welcome {{ data.name }}</h1>
     {% endif %}
 
     {% if msg %}
-      <div style="color:red">{{ msg }}</div>
+      <div class="alert-text error">{{ msg }}</div>
     {% endif %}
 
     {% if message %}
-      <div style="color:aqua">{{ message }}</div>
+      <div class="alert-text success">{{ message }}</div>
     {% endif %}
 
     <div class="center-page">
+
       {% if add_emp %}
+      <!-- Add Employee -->
       <div class="emp-center-wrapper">
         <form method="post" enctype="multipart/form-data" action="{% url 'add_emp' %}">
           {% csrf_token %}
 
           <div class="mb-3">
-            <label class="form-label">Employee Name:</label>
+            <label class="form-label">Employee Name</label>
             <input type="text" name="name" class="form-control">
           </div>
 
           <div class="mb-3">
-    <label class="form-label">Employee Department</label>
-
-    <div class="input-group">
-        <select name="department" class="form-control">
-            <option value="">Select Department</option>
-
-            {% for i in all_dept %}
-                <option value="{{ i.name }}">{{ i.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-</div>
-`
-
+            <label class="form-label">Employee Department</label>
+            <select name="department" class="form-control dept-select">
+              <option class="dep">--Select Department--</option>
+              {% for i in all_dept %}
+                <option value="{{ i.id }}">{{ i.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
 
           <div class="mb-3">
-            <label class="form-label">Employee Email:</label>
+            <label class="form-label">Employee Email</label>
             <input type="email" name="email" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Employee Contact:</label>
+            <label class="form-label">Employee Contact</label>
             <input type="text" name="contact" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Employee Profile:</label>
+            <label class="form-label">Employee Profile</label>
             <input type="file" name="profile" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Password:</label>
+            <label class="form-label">Password</label>
             <input type="password" name="password" class="form-control">
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Confirm Password:</label>
+            <label class="form-label">Confirm Password</label>
             <input type="password" name="cpassword" class="form-control">
           </div>
 
           <div class="d-grid">
             <button type="submit" class="btn btn-info">Register Employee</button>
           </div>
+
         </form>
       </div>
+
       {% elif add_dept %}
+      <!-- Add Department -->
       <div class="dept-center-wrapper">
         <div class="card shadow">
           <div class="card-body">
+
             <h4 class="text-center text-info mb-4">Add Department</h4>
 
             <form method="post" action="{% url 'add_dept' %}">
@@ -113,11 +117,14 @@
               <div class="d-grid">
                 <button type="submit" class="btn btn-info">Save Department</button>
               </div>
+
             </form>
           </div>
         </div>
       </div>
+
       {% elif show_dept %}
+      <!-- Show Departments -->
       <div class="showdept-center-wrapper">
         <div class="card shadow">
           <div class="card-body">
@@ -127,7 +134,7 @@
             <table class="table table-bordered table-hover">
               <thead class="table-dark">
                 <tr>
-                  <th>Sl. No</th>
+                  <th>sl no</th>
                   <th>Name</th>
                   <th>Code</th>
                   <th>Description</th>
@@ -143,7 +150,9 @@
                   <td>{{ dept.description }}</td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="4" class="text-center text-danger">No departments found</td></tr>
+                <tr>
+                  <td colspan="4" class="text-center text-danger">No departments found</td>
+                </tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -153,7 +162,7 @@
       </div>
 
       {% elif show_emp %}
-      <div class="query_section">
+      <!-- Show Employees -->
       <div class="showemp-center-wrapper">
         <div class="card shadow">
           <div class="card-body">
@@ -163,7 +172,14 @@
             <table class="table table-bordered table-hover">
               <thead class="table-dark">
                 <tr>
-                  <th>#</th><th>Name</th><th>Email</th><th>Contact</th><th>Dept</th><th>Image</th><th>Actions</th>
+                  <th>S.NO.</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact</th>
+                  <th>Department</th>
+                  <th>D_code</th>
+                  <th>D_desc</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
 
@@ -175,13 +191,16 @@
                   <td>{{ emp.email }}</td>
                   <td>{{ emp.contact }}</td>
                   <td>{{ emp.department }}</td>
-                  <td>{% if emp.image %}<img src="#" width="40">{% else %}N/A{% endif %}</td>
+                  <td>{{ emp.d_code }}</td>
+                  <td>{{ emp.d_des }}</td>
                   <td>
                     <a href="{% url 'delete' emp.id %}" class="btn btn-danger btn-sm">Delete</a>
                   </td>
                 </tr>
                 {% empty %}
-                <tr><td colspan="7" class="text-center text-danger">No employee data found</td></tr>
+                <tr>
+                  <td colspan="7" class="text-center text-danger">No employee data found</td>
+                </tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -189,7 +208,7 @@
           </div>
         </div>
       </div>
-      </div>
+
       {% endif %}
 
     </div>

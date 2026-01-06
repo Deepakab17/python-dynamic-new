@@ -1,5 +1,6 @@
 {% load static %}
     <link rel="stylesheet" href="{% static 'css/userdashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_query.css' %}">
 
 
 <div class="container">
@@ -8,7 +9,7 @@
         <h2>User Panel</h2>
 
         <a href="{% url 'profile' %}">My Profile</a>
-        <a href="query">Queries</a>
+        <a href="{% url 'query' %}">Queries</a>
         <a href="#">Query Status</a>
         <a href="#">My Queries</a>
 
@@ -21,35 +22,57 @@
 
     
     <h1 style="color: aqua; margin: 50px;" >Welcome {{ data.name }}</h1>
+    <div class="card" style="width: 300px; height:300px; background-color:transparent; color:red;margin-top: 100px; margin-left: -350px;overflow: hidden;">
+        <div class="profile">
+        <img src="{{user.profile.url}}" alt="Your Profile Here">
+        </div>
 
-    <div class="card" style="width: fit-content; height:fit-content; background-color: aqua; color:red;margin-top: 100px; margin-left: -350px;">
         <p><strong>Name:</strong> {{ data.name }}</p>
         <p><strong>Email:</strong> {{ data.email }}</p>
         <p><strong>Contact:</strong> {{ data.contact }}</p>
     </div>
 </div>
 
-{% elif user %}
-<h1 style="color: aqua; margin: 50px;">Department: {{user.departments}}</h1>
+{% elif profile %}
+<h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">Department: {{user.department}}</h1>
 
 <div class="card" style="width: fit-content;height: fit-content; background-color:black; color: aqua; margin-left: 50px;margin-top: 200px;">
         <p><strong>Name:</strong> {{ user.name }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
         <p><strong>Email:</strong> {{ user.email }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
         <p><strong>Phone:</strong> {{ user.contact }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
-        <p><strong>Profile Picture:</strong> {{ user.profile|default:'No Picture Available' }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
+        
+        {% if profile.image %}    
+        Profile Picture:<img src="{{ profile.image.url }}" alt="image here">
+        
+        {% else %}
+        Profile Picture :N/A
+        {% endif %}
         <p><strong>Password:</strong> {{ user.password }}</p><button style="background-color: orange; color: black;"><a href="#" style="text-decoration: none;">Edit</a></button>
     </div>
 {% elif query %}
-<form action="{% url 'query' %}" method="post">
-    Name: <input type="text" name="name" placeholder="Your Name">
-    Email: <input type="email" name="email" placeholder="Your Email">
-    Query: <textarea name="query" placeholder="Your Query"></textarea><br>
-    <button type="submit">Submit</button>
+<div class="query-card" >
+    <form action="{% url 'query' %}" method="post">
+        {% csrf_token %}
 
-</form>
+        <h3 class="query-title">Submit Your Query</h3>
 
-    
+        <div class="query-field">
+            <input type="text" name="name" placeholder="Your Name">
+        </div>
+
+        <div class="query-field">
+            <input type="email" name="email" placeholder="Your Email">
+        </div>
+
+        <div class="query-field">
+            <textarea name="query" placeholder="Your Query"></textarea>
+        </div>
+
+        <button class="query-btn" type="submit">Submit</button>
+    </form>
+</div>
 {% endif %}
+
     
 
 

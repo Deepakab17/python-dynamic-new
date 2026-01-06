@@ -24,6 +24,8 @@ class Employee1(models.Model):
     contact = models.CharField(max_length=15)
     profile = models.ImageField(upload_to='employee_profiles/', blank=True, null=True)
     password = models.CharField(max_length=100)
+    d_code = models.CharField(max_length=20,null=True)
+    d_des = models.CharField(max_length=50,null=True)
     def _str_(self):
         return self.name
 class Department(models.Model):
@@ -36,6 +38,22 @@ class Query(models.Model):
     name=models.CharField(max_length=20)
     email=models.EmailField(unique=True)
     query=models.CharField(max_length=100,blank=False)
+
+class userquery(models.Model):
+    STATUS_CHOICES = (
+        ('Pending', 'Pending'),
+        ('In Progress', 'In Progress'),
+        ('Completed', 'Completed'),
+    )
+
+    name = models.CharField(max_length=100)      
+    email = models.EmailField()                  
+    query = models.TextField()                   
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+    created_at = models.DateTimeField(auto_now_add=True)  
+
+    def _str_(self):
+        return f"{self.name} - {self.query[:30]}..."
 
 
 
