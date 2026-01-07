@@ -1,0 +1,54 @@
+/* Query Section Title */
+h4.text-info {
+    color: rgb(35, 120, 156);
+    font-weight: 600;
+}
+
+/* Table wrapper look */
+.table {
+    background: rgba(15, 23, 42, 0.741);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Header */
+.table thead {
+    background: rgba(2, 6, 23, 0.245);
+}
+
+.table thead th {
+    color: rgb(127, 156, 47);
+    font-weight: 600;
+    border: none;
+}
+
+/* Body rows */
+.table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.table tbody tr:hover {
+    background: rgb(30, 41, 59);
+}
+
+/* Cells */
+.table td {
+    color: rgba(19, 178, 69, 0.959);
+    border-color: rgba(51, 65, 85, 0.214);
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    background: rgba(51, 65, 85, 0.223);
+    color:rgb(159, 124, 82);
+    font-weight: 500;
+}
+
+.table td:last-child {
+    font-size: 13px;
+    color: rgb(148, 163, 184);
+}
+.text-danger {
+    color: rgb(248, 113, 113);
+}

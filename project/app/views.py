@@ -3,7 +3,7 @@ from .models import Employee
 from django.http import HttpResponse
 from django.core.mail import send_mail
 from django.contrib import messages
-from .models import Employee as emp,Employee1 as emp1, Department as dept,Query,userquery as uq
+from .models import Employee as emp,Employee1 as emp1, Department as dept,Query
 
 
 def landing(req):
@@ -236,21 +236,25 @@ def delete_query(req,pk):
     all_query = Query.objects.all()
     return render(req,'admindashboard.html',{'query':all_query})
 def show_query(req):
-    user_id = req.session.get('user_id')
-    user=user = emp1.objects.get(id=user_id)
+    if 'admin' not in req.session:
+        return redirect('login')
+
     all_query = Query.objects.all()
-    queries = Query.objects.filter(email=user.email)
-    return render(req,'admindashboard.html',{'query':all_query,'queries':queries})
+    return render(req, 'admindashboard.html', {'query': all_query})
+
 def query(req):
     print("query form is open")
     if req.method == "POST":
-        name = req.POST.get('name')
-        email = req.POST.get('email')
-        user_query = req.POST.get('query')
+        n= req.POST.get('name')
+        e= req.POST.get('email')
+        s=req.POST.get('subject')
+        q = req.POST.get('query')
+        print(n,e,s,q)
         Query.objects.create(
-            name=name,
-            email=email,
-            query=user_query
+            name=n,
+            email=e,
+            subject=s,
+            query=q
         )
         messages.success(req, 'Query submitted successfully!')
         return redirect('dashboard')

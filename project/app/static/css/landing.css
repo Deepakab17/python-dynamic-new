@@ -3,7 +3,16 @@
     padding: 0;
     box-sizing: border-box;
 }
-.img{
-    height: 50%;
-    width: 50%;
+.img {
+    height: 92vh;
+    width: 100%;
 }
+
+.bg {
+    height: 100%;
+    width: 100%;
+    background-image: url("../images/Ladakh2.jpg");
+    background-size: cover;
+    background-position: center;
+}
+

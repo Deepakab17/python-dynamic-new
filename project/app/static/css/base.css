@@ -1,0 +1,63 @@
+/* Navbar base styling */
+.navbar {
+    background-color: rgb(2, 6, 23) !important;
+}
+
+/* Brand */
+.navbar-brand {
+    color: rgb(56, 189, 248) !important;
+    font-weight: 600;
+}
+
+/* Main links */
+.navbar-nav .nav-link {
+    color: rgb(203, 213, 225) !important;
+    transition: 0.2s ease;
+}
+
+/* Hover effect */
+.navbar-nav .nav-link:hover {
+    color: rgb(56, 189, 248) !important;
+}
+
+/* Active link */
+.navbar-nav .nav-link.active {
+    color: rgb(56, 189, 248) !important;
+}
+
+/* Dropdown */
+.dropdown-menu {
+    background-color: rgb(2, 6, 23);
+    border: 1px solid rgb(51, 65, 85);
+}
+
+.dropdown-item {
+    color: rgb(203, 213, 225);
+}
+
+.dropdown-item:hover {
+    background-color: rgb(15, 23, 42);
+    color: rgb(56, 189, 248);
+}
+
+/* Search input */
+.form-control {
+    background-color: rgb(15, 23, 42);
+    border: 1px solid rgb(51, 65, 85);
+    color: rgb(226, 232, 240);
+}
+
+.form-control::placeholder {
+    color: rgb(148, 163, 184);
+}
+
+/* Search button */
+.btn-outline-success {
+    color: rgb(56, 189, 248);
+    border-color: rgb(56, 189, 248);
+}
+
+.btn-outline-success:hover {
+    background-color: rgb(56, 189, 248);
+    color: rgb(2, 6, 23);
+}

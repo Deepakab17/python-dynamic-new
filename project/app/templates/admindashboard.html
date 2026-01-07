@@ -1,12 +1,13 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<link rel="stylesheet" href="{% static 'css/admin_query.css' %}">
 
 <div class="container">
 
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="image">
-      <img src="{% static 'images/Profile.jpg' %}" alt="profile here">
+      <img src="{% static 'images/Profile2.jpg' %}" alt="profile here">
     </div>
     <h1 style="color: aqua;">Hello Deepak </h1>
 
@@ -209,7 +210,41 @@
           </div>
         </div>
       </div>
+<h4 class="mt-4 text-info">User Queries</h4>
 
+{% elif query %}
+<table class="table table-bordered table-hover text-center mt-3">
+    <thead class="table-dark">
+        <tr>
+            <th>sl No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Reply</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for q in query %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ q.name }}</td>
+            <td>{{ q.email }}</td>
+            <td>{{ q.subject }}</td>
+            <td>{{ q.query }}</td>
+            <td>
+                <span class="badge bg-secondary">{{ q.status }}</span>
+            </td>
+            <td>{{ q.created_at|date:"d M Y H:i" }}</td>
+            <td>Empty</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-danger mt-3">No queries available.</p>
       {% endif %}
 
     </div>
