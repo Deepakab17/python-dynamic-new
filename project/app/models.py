@@ -45,8 +45,8 @@ class Query(models.Model):
     query=models.CharField(max_length=100,blank=False)
     subject=models.CharField(max_length=20,null=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending',null=True)
-    created_at = models.DateTimeField(auto_now_add=True,null=True)  
-
+    created_at = models.DateTimeField(auto_now_add=True,null=True)
+    solution=models.CharField(max_length=200,null=True)
     def __str__(self):
         return f"{self.name} - {self.query[:30]}..."
 

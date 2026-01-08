@@ -24,7 +24,11 @@
 
   <!-- Main Area -->
   <div class="main">
-
+ {% if mess %}
+        <div class="message-box">
+            <h1>{{mess}}</h1>
+        </div>
+        {% endif %}
     {% if data %}
       <h1 class="welcome-text">Welcome {{ data.name }}</h1>
     {% endif %}
@@ -93,7 +97,6 @@
       </div>
 
       {% elif add_dept %}
-      <!-- Add Department -->
       <div class="dept-center-wrapper">
         <div class="card shadow">
           <div class="card-body">
@@ -128,7 +131,7 @@
       </div>
 
       {% elif show_dept %}
-      <!-- Show Departments -->
+  
       <div class="showdept-center-wrapper">
         <div class="card shadow">
           <div class="card-body">
@@ -238,15 +241,22 @@
                 <span class="badge bg-secondary">{{ q.status }}</span>
             </td>
             <td>{{ q.created_at|date:"d M Y H:i" }}</td>
-            <td>Empty</td>
+            <td><a href="{% url 'reply' id=q.id %}"class= "reply">Reply</a></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-{% else %}
-<p class="text-danger mt-3">No queries available.</p>
       {% endif %}
 
+{% if reply %}
+<form action="{% url 'reply' id=id %}" method="post">
+  {% csrf_token %}
+  reply: <input type="text" name="reply">
+  <button type="submit" class="reply">Submit Reply</button>
+</form>
+  
+{% endif %}
+  
     </div>
   </div>
 </div>

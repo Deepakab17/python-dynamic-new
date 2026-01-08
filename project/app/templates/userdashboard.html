@@ -3,157 +3,154 @@
 
 <div class="container">
 
-<div class="sidebar">
+    <div class="sidebar">
 
-    <div class="profile">
-        {% if user.profile %}
+        <div class="profile">
+            {% if user.profile %}
             <img src="{{ user.profile.url }}" alt="Profile">
-            
-       {% endif %} 
-    </div><br><br>
-  
-    <h2>{{ user.name }}</h2>
-   
 
-    <a href="{% url 'profile' %}">My Profile</a>
-    <a href="{% url 'query' %}">Queries</a>
-    <a href="{% url 'query_status' %}">Query Status</a>
-    <a href="#">My Queries</a>
+            {% endif %}
+        </div><br><br>
 
-    <div class="logout-box">
-        <a href="{% url 'logout' %}" class="logout-btn" onclick="return confirm('Log Out?')">Logout</a>
-    </div>
-
-</div>
-
-<div class="main">
-    {% if messages %}
-<div class="message-box">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-</div>
-{% endif %}
+        <h2>{{ user.name }}</h2>
 
 
-{% if profile %}
-    <h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">
-        Department: {{ user.department }}
-    </h1>
+        <a href="{% url 'profile' %}">My Profile</a>
+        <a href="{% url 'query' %}">Queries</a>
+        <a href="{% url 'query_status' %}">Query Status</a>
+        <a href="#">My Queries</a>
 
-    <div class="profile-card">
-
-        <div class="profile-row">
-            <p><strong>Name:</strong> {{ user.name }}</p>
-            <button class="edit-btn">Edit</button>
-        </div>
-
-        <div class="profile-row">
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <button class="edit-btn">Edit</button>
-        </div>
-
-        <div class="profile-row">
-            <p><strong>Phone:</strong> {{ user.contact }}</p>
-            <button class="edit-btn">Edit</button>
-        </div>
-
-        <div class="profile-row">
-            <p><strong>Password:</strong> {{ user.password }}</p>
-            <button class="edit-btn">Edit</button>
+        <div class="logout-box">
+            <a href="{% url 'logout' %}" class="logout-btn" onclick="return confirm('Log Out?')">Logout</a>
         </div>
 
     </div>
 
+    <div class="main">
+        {% if messages %}
+        <div class="message-box">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 
-{% elif query %}
-<div class="query-card" >
-    <form action="{% url 'query' %}" method="post">
-        {% csrf_token %}
 
-        <h3 class="query-title">Submit Your Query</h3>
+        {% if profile %}
+        <h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">
+            Department: {{ user.department }}
+        </h1>
 
-        <div class="query-field">
-            <input type="text" name="name" value="{{user.name}}" readonly>
+        <div class="profile-card">
+
+            <div class="profile-row">
+                <p><strong>Name:</strong> {{ user.name }}</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+
+            <div class="profile-row">
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+
+            <div class="profile-row">
+                <p><strong>Phone:</strong> {{ user.contact }}</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+
+            <div class="profile-row">
+                <p><strong>Password:</strong> {{ user.password }}</p>
+                <button class="edit-btn">Edit</button>
+            </div>
+
         </div>
 
-        <div class="query-field">
-            <input type="email" name="email" value="{{user.email}}" readonly>
+
+        {% elif query %}
+        <div class="query-card">
+            <form action="{% url 'query' %}" method="post">
+                {% csrf_token %}
+
+                <h3 class="query-title">Submit Your Query</h3>
+
+                <div class="query-field">
+                    <input type="text" name="name" value="{{user.name}}" readonly>
+                </div>
+
+                <div class="query-field">
+                    <input type="email" name="email" value="{{user.email}}" readonly>
+                </div>
+                <div class="query-field">
+                    <select name="subject">
+                        <option value="options">--Subject--</option>
+                        <option value="Attendence">Attendence</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Profile">Profile</option>
+                        <option value="Leave">Leave</option>
+
+                    </select>
+
+                </div>
+                <br>
+
+                <div class="query-field">
+                    <textarea name="query" placeholder="Your Query"></textarea>
+                </div>
+
+                <button class="query-btn" type="submit">Submit</button>
+            </form>
         </div>
-        <div class="query-field">
-            <select name="subject">
-                <option value="options">--Subject--</option>
-                <option value="Attendence">Attendence</option>
-                <option value="Salary">Salary</option>
-                <option value="Profile">Profile</option>
-                <option value="Leave">Leave</option>
+        {% elif query_status %}
+        <div id="query_status" class="query-status-section">
 
-            </select>
+            <div class="query-status-card">
+
+                <h3 class="query-status-title">Query Status</h3>
+
+                <table class="query-status-table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Query</th>
+                            <th>Status</th>
+                            <th>Solution</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for q in queries %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ q.query }}</td>
+
+                            <td>
+                                {% if q.status == 'Done' %}
+                                <span class="status done">Done</span>
+                                {% else %}
+                                <span class="status pending">Pending</span>
+                                {% endif %}
+                            </td>
+
+                            <td>{{ q.solution|default:"Waiting for admin response" }}</td>
+
+                            <td>
+                                <a href="{% url 'delete_query' q.id %}" style="text-decoration: none; color: red;" onclick="return confirm('Are you sure?');">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="empty-msg">No queries submitted</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
 
         </div>
-        <br>
-
-        <div class="query-field">
-            <textarea name="query" placeholder="Your Query"></textarea>
-        </div>
-
-        <button class="query-btn" type="submit">Submit</button>
-    </form>
-</div>
-{% elif query_status %}
-    <div id="query_status" class="query-status-section">
-
-    <div class="query-status-card">
-
-        <h3 class="query-status-title">Query Status</h3>
-
-        <table class="query-status-table">
-            <thead>
-                <tr>
-                    <th>S.No</th>
-                    <th>Query</th>
-                    <th>Status</th>
-                    <th>Solution</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                {% for q in queries %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{ q.query }}</td>
-
-                    <td>
-                        {% if q.status == 'Done' %}
-                            <span class="status done">Done</span>
-                        {% else %}
-                            <span class="status pending">Pending</span>
-                        {% endif %}
-                    </td>
-
-                    <td>{{ q.solution|default:"Waiting for admin response" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="empty-msg">No queries submitted</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
 
     </div>
-
-</div>
-
-</div>
-{% endif %}
-
-
-    
-
-
-
-
-
+    {% endif %}

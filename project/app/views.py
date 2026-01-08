@@ -36,6 +36,8 @@ def registration(req):
         if user:
             req.session['msg'] = f'{e} Email already exists'
             return redirect('registration')
+            # print("Saving to DB")
+            # return redirect('registration')
         else:
             if p == cp:
                 emp.objects.create(
@@ -108,27 +110,6 @@ def dashboard(req):
 def userdashboard(req):
     if 'user_id' not in req.session:
         return redirect('login')
-
-    # section = req.GET.get('section', 'profile')  
-    # context = {'active': section}
-
-    # if req.method == "POST" and section == 'query':
-    #     name = req.POST.get('name')
-    #     email = req.POST.get('email')
-    #     query_text = req.POST.get('query')
-    #     uq.objects.create(name=name, email=email, query=query_text)
-    #     context['msg'] = "Query submitted successfully!"
-
-    # if section == 'query_s':
-    #     user_name = req.session.get('user_name')
-    #     user_email = req.session.get('user_email')
-    #     context['user_queries'] = uq.objects.filter(name=user_name, email=user_email)
-
-    # if section == 'query_a':
-    #     context['all_queries'] = uq.objects.all()
-
-    # return render(req, 'userdashboard.html', context)
-
 def add_emp(req):
 
     if 'admin' in req.session:
@@ -230,11 +211,11 @@ def delete(req,id):
         data = emp1.objects.get(id=id)
         data.delete()
         return redirect('show_emp')
-def delete_query(req,pk):
-    data = Query.objects.get(id=pk)
+def delete_query(req,id):
+    data = Query.objects.get(id=id)
     data.delete()
     all_query = Query.objects.all()
-    return render(req,'admindashboard.html',{'query':all_query})
+    return render(req,'userdashboard.html',{'query':all_query})
 def show_query(req):
     if 'admin' not in req.session:
         return redirect('login')
@@ -254,7 +235,7 @@ def query(req):
             name=n,
             email=e,
             subject=s,
-            query=q
+            query=q,
         )
         messages.success(req, 'Query submitted successfully!')
         return redirect('dashboard')
@@ -267,7 +248,6 @@ def query_status(req):
         return redirect('login')
 
     user = emp1.objects.get(id=user_id)
-
     queries = Query.objects.filter(email=user.email)
 
     return render(req, 'userdashboard.html', {
@@ -275,6 +255,29 @@ def query_status(req):
         'query_status': True,
         'queries': queries
     })
+def reply(req,id):
+    if 'admin' not in req.session:
+        return redirect('login')
+    if req.session.get('admin',None):
+        data=req.session.get('admin')
+        if req.method=='POST':
+            print('reply page')
+            r=req.POST.get('reply')
+            querydata=Query.objects.get(id=id)
+            if len(r)>1:
+                querydata.solution=r
+                querydata.status="Done"
+                querydata.save()
+                queries=Query.objects.all().order_by('created_at')
+                req.session['mess']='Reply Sent'
+                mess=req.session.pop('mess',None)
+                return render(req,'admindashboard.html',{'data':data,'queries':queries,'mess':mess,'id':id})
+        else:
+            return render(req, 'admindashboard.html', {'data': data,'reply':True,'id':id})
+            
+
+    
+    
 
 def profile(req):
 
@@ -289,18 +292,6 @@ def logout(req):
     if req.session.get('user_id',None):
         req.session.flush()
     return redirect('login')
-
-
-
-
- 
-                
-
-        
-
-
-
-
 #         Employee.objects.create(
 #             name=n,
 #             email=e,

@@ -61,8 +61,6 @@ body {
 .logout-btn:hover {
     background: rgb(185, 28, 28);
 }
-
-
 .main {
     background-image: url(../images/Arunachal.jpg);
     background-position: center;
@@ -73,13 +71,18 @@ body {
     flex-direction: column;
     background-size: cover;
 }
-
 .main h1 {
     margin-top: 0;
 }
-
-
-
+.empty-msg {
+    padding: 18px;
+    color: rgb(148, 163, 184);
+}
+.message-box {
+    margin: 20px 40px;
+   padding-top: 5px;
+   color: rgb(38, 173, 60);
+}
 .center-page {
     flex: 1;
     display: flex;
@@ -102,6 +105,19 @@ label {
     margin-top: 12px;
     font-weight: bold;
     color: rgb(229, 231, 235);
+}
+.reply{
+    background: transparent;
+    border: 1px dashed rgb(66, 178, 115);
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.419);
+    text-decoration: none;
+    color: aquamarine;
+}
+.reply:hover{
+    background: rgba(145, 215, 74, 0.144);
 }
 
 input,
