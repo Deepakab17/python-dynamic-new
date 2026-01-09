@@ -18,8 +18,6 @@
         <a href="{% url 'profile' %}">My Profile</a>
         <a href="{% url 'query' %}">Queries</a>
         <a href="{% url 'query_status' %}">Query Status</a>
-        <a href="#">My Queries</a>
-
         <div class="logout-box">
             <a href="{% url 'logout' %}" class="logout-btn" onclick="return confirm('Log Out?')">Logout</a>
         </div>
@@ -102,6 +100,48 @@
                 <button class="query-btn" type="submit">Submit</button>
             </form>
         </div>
+
+        {% elif e_query %}
+        <div class="query-card">
+            <form action="{% url 'update' pk=e_query.id %}" method="post">
+    {% csrf_token %}
+
+    <h3 class="query-title">Update Your Query</h3>
+
+    <div class="query-field">
+        <input type="text" name="name" value="{{ e_query.name }}" >
+    </div>
+
+    <div class="query-field">
+        <input type="email" name="email" value="{{ e_query.email }}">
+    </div>
+
+    <div class="query-field">
+        <select name="subject">
+            <option value="">--Subject--</option>
+
+            <option value="Attendence" {% if e_query.subject == "Attendence" %}selected{% endif %}>Attendence</option>
+            <option value="Salary" {% if e_query.subject == "Salary" %}selected{% endif %}>Salary</option>
+            <option value="Profile" {% if e_query.subject == "Profile" %}selected{% endif %}>Profile</option>
+            <option value="Leave" {% if e_query.subject == "Leave" %}selected{% endif %}>Leave</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div class="query-field">
+        <textarea name="query" placeholder="Your Query">{{ e_query.query }}</textarea>
+    </div>
+
+    <button class="query-btn" type="submit">Update</button>
+</form>
+
+        </div>
+
+
+
+
+
         {% elif query_status %}
         <div id="query_status" class="query-status-section">
 
@@ -113,10 +153,13 @@
                     <thead>
                         <tr>
                             <th>S.No</th>
+                            <th>Email</th>
+                            <th>Name</th>
                             <th>Query</th>
                             <th>Status</th>
                             <th>Solution</th>
                             <th>Delete</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
 
@@ -124,6 +167,8 @@
                         {% for q in queries %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
+                            <td>{{q.email}}</td>
+                            <td>{{q.name}}</td>
                             <td>{{ q.query }}</td>
 
                             <td>
@@ -138,6 +183,9 @@
 
                             <td>
                                 <a href="{% url 'delete_query' q.id %}" style="text-decoration: none; color: red;" onclick="return confirm('Are you sure?');">Delete</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'edit' pk=q.id %}">Edit</a>
                             </td>
                         </tr>
                         {% empty %}

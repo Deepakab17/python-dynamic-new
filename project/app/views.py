@@ -255,6 +255,34 @@ def query_status(req):
         'query_status': True,
         'queries': queries
     })
+
+def edit(req,pk):
+    if 'user_id' in req.session:
+        id=req.session.get('user_id')
+        user=emp1.objects.get(id=id)
+        query=Query.objects.get(id=pk)
+        return render(req,'userdashboard.html',{'user':user,'e_query':query})
+    
+def update(req,pk):
+    if 'user_id' in req.session:
+        id=req.session.get('user_id')
+        query=Query.objects.get(id=pk)
+        query.name=req.POST.get('name')
+        query.email=req.POST.get('email')
+        query.subject=req.POST.get('subject')
+        query.query=req.POST.get('query')
+        query.save()
+        user = emp1.objects.get(id=id)
+        queries = Query.objects.filter(email=user.email)
+
+        return render(req, 'userdashboard.html', {
+        'user': user,
+        'query_status': True,
+        'queries': queries
+    })
+
+
+
 def reply(req,id):
     if 'admin' not in req.session:
         return redirect('login')
