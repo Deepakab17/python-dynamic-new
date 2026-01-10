@@ -57,7 +57,7 @@ def registration(req):
                 return redirect('login')
             else:
                 req.session['msg'] = 'Password did not match'
-                return redirect('registration')
+                return render(req,'registration.html')
 
     msg = req.session.pop('msg', None)
     return render(req, 'registration.html', {'msg': msg})
@@ -212,10 +212,14 @@ def delete(req,id):
         data.delete()
         return redirect('show_emp')
 def delete_query(req,id):
+    if 'user_id' not in req.session:
+        return redirect('login')
+    u_id=req.session.get('user_id')
+    user=emp1.objects.get(id=u_id)
     data = Query.objects.get(id=id)
     data.delete()
-    all_query = Query.objects.all()
-    return render(req,'userdashboard.html',{'query':all_query})
+    all_query = Query.objects.filter(email=user.email)
+    return redirect('query_status')
 def show_query(req):
     if 'admin' not in req.session:
         return redirect('login')

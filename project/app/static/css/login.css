@@ -48,7 +48,7 @@ h3 {
 .form-control {
     background: transparent;
     border: 1px solid rgb(149, 94, 17);
-    color: rgba(31, 4, 4, 0.279);
+    color: rgba(169, 114, 114, 0.701);
 }
 
 .form-control::placeholder {
@@ -57,8 +57,8 @@ h3 {
 
 .form-control:focus {
     background: transparent;
-    border-color: white;
-    color:black;
+    border-color: rgb(20, 2, 2);
+    color:rgb(76, 209, 200);
     box-shadow: none;
 }
 .btn-primary {
