@@ -37,7 +37,7 @@
 
 
         {% if profile %}
-        <h1 style="color:rgb(185, 194, 24); margin: 50px; font-weight: bolder;">
+        <h1 style="color:rgb(87, 17, 47); margin: 50px; font-weight: bolder;">
             Department: {{ user.department }}
         </h1>
 
@@ -81,8 +81,8 @@
                     <input type="email" name="email" value="{{user.email}}" readonly>
                 </div>
                 <div class="query-field">
-                    <select name="subject">
-                        <option value="options">--Subject--</option>
+                    <select name="subject" class="form-control">
+                        <option value="">--Subject--</option>
                         <option value="Attendence">Attendence</option>
                         <option value="Salary">Salary</option>
                         <option value="Profile">Profile</option>
@@ -104,37 +104,38 @@
         {% elif e_query %}
         <div class="query-card">
             <form action="{% url 'update' pk=e_query.id %}" method="post">
-    {% csrf_token %}
+                {% csrf_token %}
 
-    <h3 class="query-title">Update Your Query</h3>
+                <h3 class="query-title">Update Your Query</h3>
 
-    <div class="query-field">
-        <input type="text" name="name" value="{{ e_query.name }}" >
-    </div>
+                <div class="query-field">
+                    <input type="text" name="name" value="{{ e_query.name }}">
+                </div>
 
-    <div class="query-field">
-        <input type="email" name="email" value="{{ e_query.email }}">
-    </div>
+                <div class="query-field">
+                    <input type="email" name="email" value="{{ e_query.email }}">
+                </div>
 
-    <div class="query-field">
-        <select name="subject">
-            <option value="">--Subject--</option>
+                <div class="query-field">
+                    <select name="subject">
+                        <option value="">--Subject--</option>
 
-            <option value="Attendence" {% if e_query.subject == "Attendence" %}selected{% endif %}>Attendence</option>
-            <option value="Salary" {% if e_query.subject == "Salary" %}selected{% endif %}>Salary</option>
-            <option value="Profile" {% if e_query.subject == "Profile" %}selected{% endif %}>Profile</option>
-            <option value="Leave" {% if e_query.subject == "Leave" %}selected{% endif %}>Leave</option>
-        </select>
-    </div>
+                        <option value="Attendence" {% if e_query.subject == "Attendence" %}selected{% endif %}>Attendence
+                        </option>
+                        <option value="Salary" {% if e_query.subject == "Salary" %}selected{% endif %}>Salary</option>
+                        <option value="Profile" {% if e_query.subject == "Profile" %}selected{% endif %}>Profile</option>
+                        <option value="Leave" {% if e_query.subject == "Leave" %}selected{% endif %}>Leave</option>
+                    </select>
+                </div>
 
-    <br>
+                <br>
 
-    <div class="query-field">
-        <textarea name="query" placeholder="Your Query">{{ e_query.query }}</textarea>
-    </div>
+                <div class="query-field">
+                    <textarea name="query" placeholder="Your Query">{{ e_query.query }}</textarea>
+                </div>
 
-    <button class="query-btn" type="submit">Update</button>
-</form>
+                <button class="query-btn" type="submit">Update</button>
+            </form>
 
         </div>
 
@@ -147,7 +148,12 @@
 
             <div class="query-status-card">
 
-                <h3 class="query-status-title">Query Status</h3>
+                <h3 class="query-status-title">MY QUERIES</h3>
+                <div class="search-box">
+    <label for="search">Search Anything :</label>
+    <input type="text" name="search" placeholder="e.g. my query" id="search">
+    <button>Search</button>
+</div>
 
                 <table class="query-status-table">
                     <thead>
@@ -182,10 +188,22 @@
                             <td>{{ q.solution|default:"Waiting for admin response" }}</td>
 
                             <td>
-                                <a href="{% url 'delete_query' q.id %}" style="text-decoration: none; color: red;" onclick="return confirm('Are you sure?');">Delete</a>
+                                {% if q.solution %}
+                                <span style="color: gray; cursor: not-allowed;">Delete</span>
+                                {% else %}
+                                <a href="{% url 'delete_query' q.id %}"class="delete-btn" style="text-decoration: none;"
+                                    onclick="return confirm('Are you sure?');">
+                                    Delete
+                                </a>
+                                {% endif %}
                             </td>
+
                             <td>
-                                <a href="{% url 'edit' pk=q.id %}">Edit</a>
+                                {% if q.solution %}
+                                <span style="color: gray; cursor: not-allowed;">Edit</span>
+                                {% else %}
+                                <a href="{% url 'edit' pk=q.id %}"class="edit-btn" style="text-decoration: none;">Edit</a>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}

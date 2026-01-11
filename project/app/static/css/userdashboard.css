@@ -80,7 +80,7 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     background: rgba(2, 6, 23, 0.8);
-    border: 1px solid rgb(56, 189, 248);
+    border: 1px dashed rgb(56, 189, 248);
     color: rgb(224, 242, 254);
 }
 
@@ -93,11 +93,11 @@ h1 {
     border: 1px solid rgb(56, 189, 248);
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(56, 189, 248, 0.35);
-    color: rgb(224, 242, 254);
+    color: rgb(15, 20, 23);
     position: absolute;
-    top: 50%;
-    left: calc(50% + 130px);
-    transform: translate(-50%, -50%);
+    top: 25%;
+    left: 32%;
+  
 }
 
 .query-title {
@@ -150,7 +150,7 @@ h1 {
     color:rgb(95, 188, 188);
     padding: 24px 28px;
     border-radius: 12px;
-    margin-left:40%;
+    margin-left:32%;
     margin-top:10%;
     width: fit-content;
     border: 1px solid rgb(56, 189, 248);
@@ -172,7 +172,7 @@ h1 {
 .edit-btn {
     background-color: orange;
     color: black;
-    border: none;
+    border:2px solid rgb(18, 163, 192);
     padding: 6px 14px;
     border-radius: 6px;
     cursor: pointer;
@@ -181,12 +181,82 @@ h1 {
 }
 
 .edit-btn:hover {
-    background-color: rgb(234, 179, 8);
+    background-color:black;
+    color: orange;
+}
+.delete-btn {
+    background-color: red;
+    color: cyan;
+    border:2px solid rgb(18, 163, 192);
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background-color:rgb(0, 255, 208);
+    color: red;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 15px 0;
+}
+
+/* Label */
+.search-box label {
+    color: rgb(149, 94, 17);
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
+/* Input */
+.search-box input {
+    background: transparent;
+    border: 1px solid rgb(149, 94, 17);
+    color: rgb(76, 209, 200);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.search-box input::placeholder {
+    color: rgba(72, 173, 32, 0.652);
+}
+
+.search-box input:focus {
+    background: transparent;
+    border-color: rgb(76, 209, 200);
+    outline: none;
+    box-shadow: none;
 }
 
 
+.search-box button {
+    background: transparent;
+    border: 1px solid rgb(149, 94, 17);
+    color: rgb(149, 94, 17);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.search-box button:hover {
+    background: rgb(149, 94, 17);
+    color: rgb(2, 6, 23);
+}
+
+
+
 @keyframes spinBorder {
-    to { transform: rotate(360deg); }
+    to { transform: rotate(-360deg); }
 }
 
 .profile {
@@ -198,7 +268,7 @@ h1 {
     min-height: 100px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px dashed rgba(0, 255, 255, 0.104);
+    border: 1px dashed rgba(61, 197, 79, 0.962);
     box-sizing: border-box;
     display: inline-block;
     cursor: pointer;
@@ -244,9 +314,9 @@ h1 {
 .query-status-card {
     background: rgba(0, 0, 0, 0.55);
     color: rgb(95, 188, 188);
-    padding: 28px 32px;
+    padding: 28px 10px;
     border-radius: 14px;
-    width: 100%;
+    width: fit-content;
     max-width: 900px;
     border: 1px solid rgb(56, 189, 248);
     box-shadow:
@@ -341,4 +411,51 @@ h1 {
     background: rgba(239, 68, 68, 0.2);
     color: rgb(239, 68, 68);
     border: 1px solid rgb(239, 68, 68);
+}
+/* Make select look exactly like input */
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    background: rgba(2, 6, 23, 0.4);
+    border: 1px solid rgb(56, 189, 248);
+    border-radius: 6px;
+    color: rgb(224, 242, 254);
+    font-size: 14px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+/* Focus behavior identical to input */
+
+.form-control:focus {
+    outline: none;
+    border-color: rgb(14, 165, 233);
+    box-shadow: 0 0 6px rgba(14, 165, 233, 0.7);
+    background: rgba(2, 6, 23, 0.4);
+}
+
+/* Dropdown arrow */
+
+.query-field {
+    position: relative;
+}
+
+.query-field::after {
+    content: "▾";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgb(56, 189, 248);
+    pointer-events: none;
+    font-size: 14px;
+}
+
+/* Dropdown options styling */
+
+.form-control option {
+    background: rgb(2, 6, 23);
+    color: rgb(224, 242, 254);
 }

@@ -42,7 +42,7 @@ h3 {
 
 
 .form-label {
-    color: rgb(58, 111, 174);
+    color: rgba(128, 184, 15, 0.507);
 }
 
 .form-control {
@@ -60,7 +60,16 @@ h3 {
     border-color: rgb(20, 2, 2);
     color:rgb(76, 209, 200);
     box-shadow: none;
+    outline: none;
 }
+.form-control:-webkit-autofill,
+.form-control:-webkit-autofill:hover,
+.form-control:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+    -webkit-text-fill-color: rgb(76, 209, 200);
+    transition: background-color 5000s ease-in-out 0s;
+}
+
 .btn-primary {
     background: linear-gradient(to right, rgb(153, 255, 0), rgb(0, 213, 255));
     border: none;
